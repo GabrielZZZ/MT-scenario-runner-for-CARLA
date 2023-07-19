@@ -1,0 +1,51 @@
+<scenarios>
+    <scenario name="FollowLeadingVehicleScenarios_1_l" type="FollowLeadingVehicleWithLeftSideVehicle" town="Town05">
+        <ego_vehicle x="-117.1" y="-189.9" z="10" yaw="0" model="vehicle.lincoln.mkz_2017" />
+        <parameters first_actor_location="37.94553442976634" second_actor_location="53.694637173706205" first_actor_speed="6.455908851997362" second_actor_speed="10" other_actor_max_brake="1.3847725525173753" other_actor_stop_in_front_intersection="22.888993881151755" first_actor_type="vehicle.bmw.grandtourer" second_actor_type="vehicle.yamaha.yzf" />
+    </scenario>
+    <scenario name="FollowLeadingVehicleScenarios_1_r" type="FollowLeadingVehicleWithRightSideVehicle" town="Town05">
+        <ego_vehicle x="-117.1" y="-189.9" z="10" yaw="0" model="vehicle.lincoln.mkz_2017" />
+        <parameters first_actor_location="37.94553442976634" second_actor_location="53.694637173706205" first_actor_speed="6.455908851997362" second_actor_speed="10" other_actor_max_brake="1.3847725525173753" other_actor_stop_in_front_intersection="22.888993881151755" first_actor_type="vehicle.bmw.grandtourer" second_actor_type="vehicle.yamaha.yzf" />
+    </scenario>
+    <scenario name="FollowLeadingVehicleScenarios_2" type="FollowLeadingVehicleWithAheadVehicle" town="Town02">
+        <ego_vehicle x="137" y="105.3" z="0.4" yaw="180" model="vehicle.lincoln.mkz_2017" />
+        <parameters first_actor_location="35.11350903243801" second_actor_location="72.2222279264325" first_actor_speed="17.263339400394067" second_actor_speed="10" other_actor_max_brake="1.6567502102333975" other_actor_stop_in_front_intersection="32.74366564929071" first_actor_type="vehicle.audi.a2" second_actor_type="vehicle.dodge_charger.police" />
+    </scenario>
+    <scenario name="FollowLeadingVehicleScenarios_2_f1" type="FollowLeadingVehicleWithAheadVehicle" town="Town02">
+        <ego_vehicle x="137" y="105.3" z="0.4" yaw="180" model="vehicle.lincoln.mkz_2017" />
+        <parameters first_actor_location="31.054782649884263" second_actor_location="21.79326062902579" first_actor_speed="4.935075187805072" second_actor_speed="10" other_actor_max_brake="1.7109010598297814" other_actor_stop_in_front_intersection="10.872413887500992" first_actor_type="vehicle.audi.a2" second_actor_type="vehicle.dodge_charger.police" />
+    </scenario>
+    <scenario name="FollowLeadingVehicleScenarios_2_f2" type="FollowLeadingVehicleWithAheadVehicle" town="Town02">
+        <ego_vehicle x="137" y="105.3" z="0.4" yaw="180" model="vehicle.lincoln.mkz_2017" />
+        <parameters first_actor_location="39.52848489785742" second_actor_location="79.87764376501741" first_actor_speed="6.912338828517692" second_actor_speed="10" other_actor_max_brake="1.863663831762677" other_actor_stop_in_front_intersection="21.069486113383633" first_actor_type="vehicle.audi.a2" second_actor_type="vehicle.dodge_charger.police" />
+    </scenario>
+    <scenario name="FollowLeadingVehicleScenarios_2_f3" type="FollowLeadingVehicleWithAheadVehicle" town="Town02">
+        <ego_vehicle x="137" y="105.3" z="0.4" yaw="180" model="vehicle.lincoln.mkz_2017" />
+        <parameters first_actor_location="21.879959495584465" second_actor_location="74.63656733195165" first_actor_speed="9.440426000791357" second_actor_speed="10" other_actor_max_brake="1.8808313348227064" other_actor_stop_in_front_intersection="25.887689473697648" first_actor_type="vehicle.audi.a2" second_actor_type="vehicle.dodge_charger.police" />
+    </scenario>
+
+    <scenario name="FollowLeadingVehicleScenarios_2_f4" type="FollowLeadingVehicleWithAheadVehicle" town="Town02">
+        <ego_vehicle x="137" y="105.3" z="0.4" yaw="180" model="vehicle.lincoln.mkz_2017" />
+        <parameters first_actor_location="33.22656566656174" second_actor_location="77.02214166540145" first_actor_speed="11.218597609243698" second_actor_speed="11.691895527911306" other_actor_max_brake="1.8670496303717652" other_actor_stop_in_front_intersection="28.609029628747805" first_actor_type="vehicle.audi.a2" second_actor_type="vehicle.dodge_charger.police" />
+    </scenario>
+    <scenario name="FollowLeadingVehicleScenarios_2_f5" type="FollowLeadingVehicleWithAheadVehicle" town="Town02">
+        <ego_vehicle x="137" y="105.3" z="0.4" yaw="180" model="vehicle.lincoln.mkz_2017" />
+        <parameters first_actor_location="11.859442721720757" second_actor_location="73.58585844065433" first_actor_speed="11.58571669139526" second_actor_speed="18.671911819218856" other_actor_max_brake="1.144372664399482" other_actor_stop_in_front_intersection="29.2054278455764" first_actor_type="vehicle.audi.a2" second_actor_type="vehicle.dodge_charger.police" />
+    </scenario>
+    <scenario name="FollowLeadingVehicleScenarios_2_f6" type="FollowLeadingVehicleWithAheadVehicle" town="Town02">
+        <ego_vehicle x="137" y="105.3" z="0.4" yaw="180" model="vehicle.lincoln.mkz_2017" />
+        <parameters first_actor_location="29.753776285365827" second_actor_location="77.09366998927341" first_actor_speed="13.004215671015674" second_actor_speed="17.653819627635244" other_actor_max_brake="1.5653992722421208" other_actor_stop_in_front_intersection="17.185608012966284" first_actor_type="vehicle.audi.a2" second_actor_type="vehicle.dodge_charger.police" />
+    </scenario>
+    <scenario name="FollowLeadingVehicleScenarios_2_f7" type="FollowLeadingVehicleWithAheadVehicle" town="Town02">
+        <ego_vehicle x="137" y="105.3" z="0.4" yaw="180" model="vehicle.lincoln.mkz_2017" />
+        <parameters first_actor_location="24.684973211844692" second_actor_location="43.36618451230966" first_actor_speed="18.632387996991593" second_actor_speed="14.10773171988505" other_actor_max_brake="1.242127914394355" other_actor_stop_in_front_intersection="34.93435697056297" first_actor_type="vehicle.audi.a2" second_actor_type="vehicle.dodge_charger.police" />
+    </scenario>
+    <scenario name="FollowLeadingVehicleScenarios_2_f8" type="FollowLeadingVehicleWithAheadVehicle" town="Town02">
+        <ego_vehicle x="137" y="105.3" z="0.4" yaw="180" model="vehicle.lincoln.mkz_2017" />
+        <parameters first_actor_location="44.59544085335572" second_actor_location="21.031148032817917" first_actor_speed="16.106652067363193" second_actor_speed="14.599844453429604" other_actor_max_brake="0.5679311834830898" other_actor_stop_in_front_intersection="28.294351048609226" first_actor_type="vehicle.audi.a2" second_actor_type="vehicle.dodge_charger.police" />
+    </scenario>
+    <scenario name="FollowLeadingVehicleScenarios_2_f9" type="FollowLeadingVehicleWithAheadVehicle" town="Town02">
+        <ego_vehicle x="137" y="105.3" z="0.4" yaw="180" model="vehicle.lincoln.mkz_2017" />
+        <parameters first_actor_location="32.01246364731466" second_actor_location="20.71559169072644" first_actor_speed="11.458427479600763" second_actor_speed="16.042383076632387" other_actor_max_brake="1.216921370000161" other_actor_stop_in_front_intersection="37.89085747281822" first_actor_type="vehicle.audi.a2" second_actor_type="vehicle.dodge_charger.police" />
+    </scenario>
+</scenarios>

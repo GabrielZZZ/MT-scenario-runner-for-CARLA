@@ -1,0 +1,47 @@
+<scenarios>
+    <scenario name="DynamicObjectCrossing_12" type="DynamicObjectCrossingTwoPedstrians" town="Town02">
+        <ego_vehicle x="7.63" y="109.91" z="1.22" yaw="270" model="vehicle.lincoln.mkz_2017" />
+        <parameters first_actor_location="13" second_actor_location="10" first_actor_speed="16.451372859155768" second_actor_speed="10" other_actor_max_brake="0.638660748381253" other_actor_stop_in_front_intersection="25.094662547030428" first_actor_type="vehicle.bmw.grandtourer" second_actor_type="vehicle.yamaha.yzf" />
+    </scenario>
+
+    <scenario name="DynamicObjectCrossing_12_f1" type="DynamicObjectCrossingTwoPedstrians" town="Town02">
+        <ego_vehicle x="7.63" y="109.91" z="1.22" yaw="359" model="vehicle.lincoln.mkz_2017" />
+        <parameters first_actor_location="13" second_actor_location="10" first_actor_speed="16.451372859155768" second_actor_speed="4.766021407372079" other_actor_max_brake="0.638660748381253" other_actor_stop_in_front_intersection="25.094662547030428" first_actor_type="vehicle.bmw.grandtourer" second_actor_type="vehicle.yamaha.yzf" />
+    </scenario>
+    <scenario name="DynamicObjectCrossing_12_f2" type="DynamicObjectCrossingTwoPedstrians" town="Town02">
+        <ego_vehicle x="7.63" y="109.91" z="1.22" yaw="359" model="vehicle.lincoln.mkz_2017" />
+        <parameters first_actor_location="13" second_actor_location="10" first_actor_speed="16.451372859155768" second_actor_speed="7.895871934895389" other_actor_max_brake="0.638660748381253" other_actor_stop_in_front_intersection="25.094662547030428" first_actor_type="vehicle.bmw.grandtourer" second_actor_type="vehicle.yamaha.yzf" />
+    </scenario>
+    <scenario name="DynamicObjectCrossing_12_f3" type="DynamicObjectCrossingTwoPedstrians" town="Town02">
+        <ego_vehicle x="7.63" y="109.91" z="1.22" yaw="359" model="vehicle.lincoln.mkz_2017" />
+        <parameters first_actor_location="13" second_actor_location="10" first_actor_speed="16.451372859155768" second_actor_speed="9.361360517492908" other_actor_max_brake="0.638660748381253" other_actor_stop_in_front_intersection="25.094662547030428" first_actor_type="vehicle.bmw.grandtourer" second_actor_type="vehicle.yamaha.yzf" />
+    </scenario>
+    <scenario name="DynamicObjectCrossing_12_f4" type="DynamicObjectCrossingTwoPedstrians" town="Town02">
+        <ego_vehicle x="7.63" y="109.91" z="1.22" yaw="359" model="vehicle.lincoln.mkz_2017" />
+        <parameters first_actor_location="13" second_actor_location="10" first_actor_speed="16.451372859155768" second_actor_speed="5.701874237544973" other_actor_max_brake="0.638660748381253" other_actor_stop_in_front_intersection="25.094662547030428" first_actor_type="vehicle.bmw.grandtourer" second_actor_type="vehicle.yamaha.yzf" />
+    </scenario>
+    <scenario name="DynamicObjectCrossing_12_f5" type="DynamicObjectCrossingTwoPedstrians" town="Town02">
+        <ego_vehicle x="7.63" y="109.91" z="1.22" yaw="359" model="vehicle.lincoln.mkz_2017" />
+        <parameters first_actor_location="13" second_actor_location="10" first_actor_speed="16.451372859155768" second_actor_speed="9.48969007849609" other_actor_max_brake="0.638660748381253" other_actor_stop_in_front_intersection="25.094662547030428" first_actor_type="vehicle.bmw.grandtourer" second_actor_type="vehicle.yamaha.yzf" />
+    </scenario>
+    <scenario name="DynamicObjectCrossing_12_f6" type="DynamicObjectCrossingTwoPedstrians" town="Town02">
+        <ego_vehicle x="7.63" y="109.91" z="1.22" yaw="359" model="vehicle.lincoln.mkz_2017" />
+        <parameters first_actor_location="13" second_actor_location="10" first_actor_speed="16.451372859155768" second_actor_speed="3.264408559071997" other_actor_max_brake="0.638660748381253" other_actor_stop_in_front_intersection="25.094662547030428" first_actor_type="vehicle.bmw.grandtourer" second_actor_type="vehicle.yamaha.yzf" />
+    </scenario>
+    <scenario name="DynamicObjectCrossing_12_f7" type="DynamicObjectCrossingTwoPedstrians" town="Town02">
+        <ego_vehicle x="7.63" y="109.91" z="1.22" yaw="359" model="vehicle.lincoln.mkz_2017" />
+        <parameters first_actor_location="13" second_actor_location="10" first_actor_speed="16.451372859155768" second_actor_speed="5.647536691755843" other_actor_max_brake="0.638660748381253" other_actor_stop_in_front_intersection="25.094662547030428" first_actor_type="vehicle.bmw.grandtourer" second_actor_type="vehicle.yamaha.yzf" />
+    </scenario>
+    <scenario name="DynamicObjectCrossing_12_f8" type="DynamicObjectCrossingTwoPedstrians" town="Town02">
+        <ego_vehicle x="7.63" y="109.91" z="1.22" yaw="359" model="vehicle.lincoln.mkz_2017" />
+        <parameters first_actor_location="13" second_actor_location="10" first_actor_speed="16.451372859155768" second_actor_speed="7.49253765193175" other_actor_max_brake="0.638660748381253" other_actor_stop_in_front_intersection="25.094662547030428" first_actor_type="vehicle.bmw.grandtourer" second_actor_type="vehicle.yamaha.yzf" />
+    </scenario>
+    <scenario name="DynamicObjectCrossing_12_f9" type="DynamicObjectCrossingTwoPedstrians" town="Town02">
+        <ego_vehicle x="7.63" y="109.91" z="1.22" yaw="359" model="vehicle.lincoln.mkz_2017" />
+        <parameters first_actor_location="13" second_actor_location="10" first_actor_speed="16.451372859155768" second_actor_speed="5.245614043233465" other_actor_max_brake="0.638660748381253" other_actor_stop_in_front_intersection="25.094662547030428" first_actor_type="vehicle.bmw.grandtourer" second_actor_type="vehicle.yamaha.yzf" />
+    </scenario>
+    <scenario name="DynamicObjectCrossing_12_f10" type="DynamicObjectCrossingTwoPedstrians" town="Town02">
+        <ego_vehicle x="7.63" y="109.91" z="1.22" yaw="359" model="vehicle.lincoln.mkz_2017" />
+        <parameters first_actor_location="13" second_actor_location="10" first_actor_speed="16.451372859155768" second_actor_speed="5.987541130498572" other_actor_max_brake="0.638660748381253" other_actor_stop_in_front_intersection="25.094662547030428" first_actor_type="vehicle.bmw.grandtourer" second_actor_type="vehicle.yamaha.yzf" />
+    </scenario>
+</scenarios>

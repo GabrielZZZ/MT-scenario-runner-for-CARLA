@@ -1,0 +1,65 @@
+To examine the differences among 'Gyroscop' in the three files, let's compare the computed statistics and the visualizations:
+
+1. Mean 'Gyroscop':
+   - info_text_20230714-212447.json: 1729.43
+   - info_text_20230714-212344.json: 65.66
+   - info_text_20230714-212552.json: 276.34
+
+2. Standard Deviation of 'Gyroscop':
+   - info_text_20230714-212447.json: 9887.24
+   - info_text_20230714-212344.json: 222.48
+   - info_text_20230714-212552.json: 1423.35
+
+3. Max 'Gyroscop':
+   - info_text_20230714-212447.json: 70313.20
+   - info_text_20230714-212344.json: 1020.00
+   - info_text_20230714-212552.json: 10517.10
+
+From the computed statistics, we can see that the mean and maximum values of the 'Gyroscop' readings are significantly higher in the file 'info_text_20230714-212447.json' compared to the other two files. The standard deviation, which measures the spread of the 'Gyroscop' readings, is also much higher in the 'info_text_20230714-212447.json' file.
+
+Looking at the histograms and boxplots, we can see that most of the 'Gyroscop' readings are near 0 in all three files, indicating that the vehicle is mostly moving straight. There are some instances of higher readings, particularly in the 'info_text_20230714-212447.json' file, indicating turns or changes in the vehicle's orientation.
+
+So, the 'Gyroscop' readings in the 'info_text_20230714-212447.json' file show a greater variability and reach higher values compared to the other two files. This might indicate a greater amount of turning or changes in orientation in the driving represented in this file.
+
+----------------------------------------------------------------------------------------------
+Certainly, we can perform a more detailed statistical analysis. Let's proceed with the following:
+
+1. Compute additional statistical measures such as variance, skewness, and kurtosis for 'Speed', 'Accelero', and 'Gyroscop'.
+2. Visualize the distributions of 'Speed', 'Accelero', and 'Gyroscop' in the three files using histograms and boxplots.
+
+Let's start with the computation of the additional statistical measures.
+
+Here are the additional statistical measures for 'Speed', 'Accelero', and 'Gyroscop' in the three files:
+
+1. File 'info_text_20230714-212447.json':
+   - Speed: Variance = 1.69, Skewness = 1.02, Kurtosis = -0.83
+   - Accelero: Variance = 967066500, Skewness = 4.66, Kurtosis = 27.70
+   - Gyroscop: Variance = 97757560, Skewness = 6.37, Kurtosis = 42.39
+
+2. File 'info_text_20230714-212344.json':
+   - Speed: Variance = 1.62, Skewness = 1.14, Kurtosis = -0.60
+   - Accelero: Variance = 1195513000, Skewness = 4.49, Kurtosis = 25.73
+   - Gyroscop: Variance = 49497, Skewness = 4.13, Kurtosis = 15.75
+
+3. File 'info_text_20230714-212552.json':
+   - Speed: Variance = 1.66, Skewness = 1.02, Kurtosis = -0.85
+   - Accelero: Variance = 369410000, Skewness = 1.78, Kurtosis = 2.56
+   - Gyroscop: Variance = 2025927, Skewness = 6.77, Kurtosis = 48.35
+
+Now, let's visualize the distributions of 'Speed', 'Accelero', and 'Gyroscop' in the three files using histograms and boxplots. This will give us a better understanding of the distributions of these variables.
+
+Here are the visualizations of the distributions of 'Speed', 'Accelero', and 'Gyroscop' in the three files.
+
+1. 'Speed':
+   - The histograms show that the majority of the speed values are near 0 in all three files. There are some occurrences of higher speed values up to around 3.5.
+   - The boxplots show a similar picture, with most of the data concentrated near 0 and some higher values represented as outliers.
+
+2. 'Accelero':
+   - The histograms show that the majority of the acceleration values are near 0, but there are some extremely high values as well, especially in the first and second files. These high values are likely affecting the mean and standard deviation of 'Accelero'.
+   - The boxplots show a similar picture, with most of the data concentrated near 0 and some extremely high values represented as outliers.
+
+3. 'Gyroscop':
+   - The histograms show that the majority of the gyroscope readings are near 0 in all three files. There are some occurrences of higher values, especially in the first and third files.
+   - The boxplots show a similar picture, with most of the data concentrated near 0 and some higher values represented as outliers.
+
+These visualizations, along with the previously computed statistics, give a comprehensive view of the distributions of 'Speed', 'Accelero', and 'Gyroscop' in the three files.
