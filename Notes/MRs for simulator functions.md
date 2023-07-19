@@ -4,9 +4,9 @@ Metamorphic Testing is a unique approach to testing software that leverages the 
 
 ## 1. Spawning Actors
 
-- **MR1**: Two identical actors spawned at the same position should either collide immediately or occupy the same space.
+- **MR1**: Two actors spawned at the same position should either collide immediately or occupy the same space.
 - #### MRP<sub>FollowDirection</sub>:
-  - spawn a third actor at the same location.
+  - Spawn a third actor around the two actors, should not affect the situation of the two actors. E.g., one actor may collide other obstacles randomly. 
 - **MR2**: Spawning the same actor at two different positions should not result in an immediate collision.
 
 
