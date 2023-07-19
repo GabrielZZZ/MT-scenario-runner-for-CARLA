@@ -1,13 +1,22 @@
 # Metamorphic Testing in Driving Simulators
 
-Metamorphic Testing is a unique approach to testing software that leverages the relations between inputs and outputs across multiple executions, termed as Metamorphic Relations (MRs). The purpose of this document is to outline MRs that can be applied in the context of testing driving simulators.
+Metamorphic Testing is a unique approach to testing software that leverages the relations between inputs and outputs across multiple executions, termed as Metamorphic Relations (MRs). This document aims to outline MRs that can be applied in the context of testing driving simulators.
 
 ## 1. Spawning Actors
+We can monitor the outputs by the collision results, and location data after spawned.
 
-- **MR1**: Two actors spawned at the same position should either collide immediately or occupy the same space.
+- **Scenario 1**: Two actors spawned at the same position should either collide immediately or occupy the same space.
   - #### MRP<sub>FollowDirection</sub>:
-    - Spawn a third actor around the two actors, should not affect the situation of the two actors. E.g., one actor may fly because of the collision, then adding a third non-contact actor should not affect the track of "fly". 
-- **MR2**: Spawning the same actor at two different positions should not result in an immediate collision.
+    - Spawn a third actor around the two actors, should not affect the situation of the two actors. E.g., one actor may fly because of the collision, then adding a third non-contact actor should not affect the track of "fly".
+  - #### MRP<sub>PropertyVariations</sub>:
+    - Rotate both actors without changing the spawn location should give the same results. 
+ 
+  - #### MRP<sub>CombineScenarios</sub>:
+    - Scenario 1: One cyclist spawned in front of the ego vehicle (both bboxes crossed)
+    - Scenario 2: Another actor vehicle spawned behind the ego vehicle (both bboxes crossed)
+    - Scenario 1 + 2: the data of ego vehicle should not change (?)
+
+  
 
 
 ## 2. Changing Environments
