@@ -58,8 +58,8 @@ class FollowLeadingVehicle(BasicScenario):
         """
 
         self._map = CarlaDataProvider.get_map()
-        self._first_vehicle_location = 25
-        self._first_vehicle_speed = 10
+        self._first_vehicle_location = 0 #25
+        self._first_vehicle_speed = 0 #10
         self._reference_waypoint = self._map.get_waypoint(config.trigger_points[0].location)
         self._other_actor_max_brake = 1.0
         self._other_actor_stop_in_front_intersection = 20
@@ -95,14 +95,42 @@ class FollowLeadingVehicle(BasicScenario):
                            first_vehicle_waypoint.transform.location.y,
                            first_vehicle_waypoint.transform.location.z + 1),
             first_vehicle_waypoint.transform.rotation)
-        first_vehicle_transform = carla.Transform(
-            carla.Location(self._other_actor_transform.location.x,
-                           self._other_actor_transform.location.y,
-                           self._other_actor_transform.location.z - 500),
-            self._other_actor_transform.rotation)
-        first_vehicle = CarlaDataProvider.request_new_actor('vehicle.nissan.patrol', first_vehicle_transform)
-        first_vehicle.set_simulate_physics(enabled=False)
-        self.other_actors.append(first_vehicle)
+        # first_vehicle_transform = carla.Transform(
+        #     carla.Location(self._other_actor_transform.location.x,
+        #                    self._other_actor_transform.location.y,
+        #                    self._other_actor_transform.location.z - 1),
+        #     carla.Rotation(yaw=280))
+        # first_vehicle = CarlaDataProvider.request_new_actor('vehicle.nissan.patrol', first_vehicle_transform)
+        
+        for degree in range(0, 360, 1):
+            for x_degree in range(-2,2,1):
+                for y_degree in range(-1,1,1):
+                    for z_degree in range(-1,1,1):
+                    
+                        first_vehicle_transform = carla.Transform(
+                        carla.Location(self._other_actor_transform.location.x + x_degree,
+                                    self._other_actor_transform.location.y + y_degree,
+                                    self._other_actor_transform.location.z + z_degree),
+                        carla.Rotation(yaw=degree))
+                        
+                        first_vehicle = CarlaDataProvider.request_new_actor('vehicle.nissan.patrol', first_vehicle_transform)
+                        if first_vehicle is not None:
+                            print("Here is the error degree: ")
+                            
+                            print("degree: ",degree)
+                            print("x_degree: ",x_degree)
+                            print("y_degree: ",y_degree)
+                            print("z_degree: ",z_degree)
+                            
+                            print(first_vehicle_transform)
+                            first_vehicle.set_simulate_physics(enabled=False)
+                            self.other_actors.append(first_vehicle)
+                            return
+        # exit()
+        
+        
+        # first_vehicle.set_simulate_physics(enabled=False)
+        # self.other_actors.append(first_vehicle)
 
     def _create_behavior(self):
         """
@@ -160,8 +188,12 @@ class FollowLeadingVehicle(BasicScenario):
         criteria = []
 
         collision_criterion = CollisionTest(self.ego_vehicles[0])
+        collision_criterion1 = CollisionTest(self.other_actors[0])
+        
 
         criteria.append(collision_criterion)
+        criteria.append(collision_criterion1)
+        
 
         return criteria
 
@@ -188,8 +220,8 @@ class FollowLeadingVehicleWithObstacle(BasicScenario):
         Setup all relevant parameters and create scenario
         """
         self._map = CarlaDataProvider.get_map()
-        self._first_actor_location = 25
-        self._second_actor_location = self._first_actor_location + 41
+        self._first_actor_location = 10
+        self._second_actor_location = self._first_actor_location + 0 #+41
         self._first_actor_speed = 10
         self._second_actor_speed = 1.5
         self._reference_waypoint = self._map.get_waypoint(config.trigger_points[0].location)
@@ -230,7 +262,7 @@ class FollowLeadingVehicleWithObstacle(BasicScenario):
         second_actor_transform = carla.Transform(
             carla.Location(second_actor_waypoint.transform.location.x,
                            second_actor_waypoint.transform.location.y,
-                           second_actor_waypoint.transform.location.z - 500),
+                           second_actor_waypoint.transform.location.z - 498.8), #-100 will trigger the potential bug
             carla.Rotation(second_actor_waypoint.transform.rotation.pitch, yaw_1,
                            second_actor_waypoint.transform.rotation.roll))
         self._second_actor_transform = carla.Transform(
@@ -239,6 +271,13 @@ class FollowLeadingVehicleWithObstacle(BasicScenario):
                            second_actor_waypoint.transform.location.z + 1),
             carla.Rotation(second_actor_waypoint.transform.rotation.pitch, yaw_1,
                            second_actor_waypoint.transform.rotation.roll))
+        
+        
+        print('-'*10)
+        print(first_actor_transform)
+        print(second_actor_transform)
+        print('-'*10)
+        
 
         first_actor = CarlaDataProvider.request_new_actor(
             'vehicle.nissan.patrol', first_actor_transform)
@@ -316,8 +355,15 @@ class FollowLeadingVehicleWithObstacle(BasicScenario):
         criteria = []
 
         collision_criterion = CollisionTest(self.ego_vehicles[0])
+        collision_criterion1 = CollisionTest(self.other_actors[0])
+        collision_criterion2 = CollisionTest(self.other_actors[1])
+        
+        
 
         criteria.append(collision_criterion)
+        criteria.append(collision_criterion1)
+        criteria.append(collision_criterion2)
+        
 
         return criteria
 

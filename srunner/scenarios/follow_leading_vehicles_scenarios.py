@@ -32,7 +32,7 @@ class FollowLeadingVehicleWithAheadVehicle(BasicScenario):
     """
 
     def __init__(self, world, ego_vehicles, config, randomize=False, debug_mode=False, criteria_enable=True,
-                 timeout=60):
+                 timeout=20):
         """
         Setup all relevant parameters and create scenario
 
@@ -97,18 +97,26 @@ class FollowLeadingVehicleWithAheadVehicle(BasicScenario):
             carla.Location(first_vehicle_waypoint.transform.location.x,
                            first_vehicle_waypoint.transform.location.y,
                            first_vehicle_waypoint.transform.location.z + 1),
-            first_vehicle_waypoint.transform.rotation)
+            carla.Rotation(yaw=180))
         self._other_actor_transform_2 = carla.Transform(
             carla.Location(second_vehicle_waypoint.transform.location.x,
                            second_vehicle_waypoint.transform.location.y,
                            second_vehicle_waypoint.transform.location.z + 1),
-            second_vehicle_waypoint.transform.rotation)  # New Actor is set 100m ahead
+            carla.Rotation(yaw=180))  # New Actor is set 100m ahead
+
+# (180,40) would fail, but (180,41) would success
+
 
         first_vehicle_transform = carla.Transform(
             carla.Location(self._other_actor_transform.location.x,
                            self._other_actor_transform.location.y,
                            self._other_actor_transform.location.z - 500),
             self._other_actor_transform.rotation)
+        
+        print('-'*10)
+        print(first_vehicle_transform)
+        
+        
         first_vehicle = CarlaDataProvider.request_new_actor(self._first_actor_type, first_vehicle_transform)
         first_vehicle.set_simulate_physics(enabled=False)
         self.other_actors.append(first_vehicle)
@@ -119,6 +127,11 @@ class FollowLeadingVehicleWithAheadVehicle(BasicScenario):
                            self._other_actor_transform_2.location.y,
                            self._other_actor_transform_2.location.z - 500),
             self._other_actor_transform_2.rotation)
+        
+        print(second_vehicle_transform)
+        print('-'*10)
+        
+        
         second_vehicle = CarlaDataProvider.request_new_actor(self._second_actor_type, second_vehicle_transform)
 
         # Existing code...      
@@ -190,10 +203,15 @@ class FollowLeadingVehicleWithAheadVehicle(BasicScenario):
         criteria = []
 
         collision_criterion = CollisionTest(self.ego_vehicles[0])
-        # collision_criterion = CollisionTest(self.other_actors[0])
+        collision_criterion1 = CollisionTest(self.other_actors[0])
+        collision_criterion2 = CollisionTest(self.other_actors[1])
+        
 
 
         criteria.append(collision_criterion)
+        criteria.append(collision_criterion1)
+        criteria.append(collision_criterion2)
+        
 
         return criteria
 

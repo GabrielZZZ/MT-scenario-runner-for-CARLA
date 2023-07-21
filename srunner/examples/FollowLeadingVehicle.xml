@@ -7,9 +7,13 @@
     <scenario name="FollowLeadingVehicleWithObstacle_1" type="FollowLeadingVehicleWithObstacle" town="Town01">
         <ego_vehicle x="107" y="133.5" z="0.5" yaw="0" model="vehicle.lincoln.mkz_2017" />
     </scenario>
+
+
     <scenario name="FollowLeadingVehicle_2" type="FollowLeadingVehicle" town="Town01">
         <ego_vehicle x="105" y="199.1" z="0.5" yaw="0" model="vehicle.lincoln.mkz_2017" />
     </scenario>
+
+
     <scenario name="FollowLeadingVehicleWithObstacle_2" type="FollowLeadingVehicleWithObstacle" town="Town01">
         <ego_vehicle x="105" y="199.1" z="0.5" yaw="0" model="vehicle.lincoln.mkz_2017" />
     </scenario>

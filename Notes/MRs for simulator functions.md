@@ -5,7 +5,12 @@ Metamorphic Testing is a unique approach to testing software that leverages the 
 ## 1. Spawning Actors
 We can monitor the outputs by the collision results, and location data after spawned.
 
+**The code does not allow to spawn two actors at the same or very close location to avoid collision.**
+
+By running the iteration loop of trying to spawn the actor near the ego vehicle, the spawn function has no problem found.
+
 - **Scenario 1**: Two actors spawned at the same position should either collide immediately or occupy the same space.
+  - The scenario cannot be loaded. 
   - #### MRP<sub>FollowDirection</sub>:
     - Spawn a third actor around the two actors, should not affect the situation of the two actors. E.g., one actor may fly because of the collision, then adding a third non-contact actor should not affect the track of "fly".
   - #### MRP<sub>PropertyVariations</sub>:

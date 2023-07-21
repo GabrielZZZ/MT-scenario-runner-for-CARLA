@@ -43,6 +43,7 @@ Use ARROWS or WASD keys for control.
 """
 
 from __future__ import print_function
+import json
 
 # ==============================================================================
 # -- imports -------------------------------------------------------------------
@@ -98,6 +99,16 @@ try:
 except ImportError:
     raise RuntimeError('cannot import numpy, make sure numpy package is installed')
 
+import json
+import os
+import time
+
+# # Define the filename at the start of the script
+# start_time_str = time.strftime("%Y%m%d-%H%M%S")
+# filename = f"MT-results/info_text_{start_time_str}.json"
+
+# # Ensure the directory exists
+# os.makedirs(os.path.dirname(filename), exist_ok=True)
 
 # ==============================================================================
 # -- Global functions ----------------------------------------------------------
@@ -135,7 +146,7 @@ class World(object):
         self.camera_manager = None
         self.restart()
         self.world.on_tick(hud.on_world_tick)
-        self.recording_enabled = False
+        self.recording_enabled = True
         self.recording_start = 0
 
     def restart(self):
@@ -398,8 +409,20 @@ class HUD(object):
         self._info_text = []
         self._server_clock = pygame.time.Clock()
 
+        # Define the filename at the start of the script
+        start_time_str = time.strftime("%Y%m%d-%H%M%S")
+        self.filename = os.path.join("MT-results", f"info_text_{start_time_str}.json")
+
+        # Ensure the directory exists
+        os.makedirs(os.path.dirname(self.filename), exist_ok=True)
+
+        self.last_write_time = self.simulation_time  # Add this line to initialize last_write_time
+
     def on_world_tick(self, timestamp):
+        
         self._server_clock.tick()
+        # self.last_write_time = self.simulation_time
+
         self.server_fps = self._server_clock.get_fps()
         self.frame = timestamp.frame
         self.simulation_time = timestamp.elapsed_seconds
@@ -461,6 +484,40 @@ class HUD(object):
                 vehicle_type = get_actor_display_name(vehicle, truncate=22)
                 self._info_text.append('% 4dm %s' % (d, vehicle_type))
 
+                # print distance to terminal
+                # print('% 4dm %s' % (d, vehicle_type))
+                # dict_1 = {
+                #     "Simulation time": '% 12s' % datetime.timedelta(seconds=int(self.simulation_time)),
+                #     "Vehicle type": vehicle_type,
+                #     "Distance": d,
+                #     }
+                # self.write_to_json(dict_1)
+               
+        # Parse the simulation time from self._info_text
+        # sim_time_line = datetime.timedelta(seconds=int(self.simulation_time))
+        # time_parts = list(map(int, sim_time_line.split(':')[1].strip().split(':')))
+        # if len(time_parts) == 1:
+        #     sim_time = time_parts[0]
+        # elif len(time_parts) == 3:
+        #     hours, minutes, seconds = time_parts
+        #     sim_time = hours * 3600 + minutes * 60 + seconds
+        # else:
+        #     print("Unexpected format for simulation time.")
+        #     return
+
+        sim_time = self.simulation_time
+
+        # If a second or more has passed in simulation time
+        # print("sim_time: ", self.simulation_time)
+        # print("last_write_time: ", self.last_write_time)
+
+
+        if sim_time - self.last_write_time >= 1:
+            with open(self.filename, 'a') as f:
+                json.dump(self._info_text, f)
+                f.write('\n')
+            self.last_write_time = sim_time
+
     def toggle_info(self):
         self._show_info = not self._show_info
 
@@ -507,6 +564,10 @@ class HUD(object):
                 v_offset += 18
         self._notifications.render(display)
         self.help.render(display)
+    
+    def write_to_json(self, data):
+        with open('test_result.json', 'a') as outfile:
+            json.dump(data, outfile)
 
 
 # ==============================================================================
@@ -908,7 +969,9 @@ def game_loop(args):
 
         hud = HUD(args.width, args.height)
         world = World(sim_world, hud, args)
-        controller = KeyboardControl(world, args.autopilot)
+        # controller = KeyboardControl(world, args.autopilot)
+        controller = KeyboardControl(world, True) # automatically trigger the autopilot
+
 
         sim_world.wait_for_tick()
 

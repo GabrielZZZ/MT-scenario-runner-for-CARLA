@@ -24,10 +24,10 @@ vehicle_models = [
 
 # Original parameters and values
 parameters = [
-    ("first_actor_location", 25),
-    ("second_actor_location", 40),
-    ("first_actor_speed", 10),
-    ("second_actor_speed", 10),
+    ("first_actor_location", 21),
+    ("second_actor_location", 26),
+    ("first_actor_speed", 0),
+    ("second_actor_speed", 0),
 
     ("other_actor_max_brake", 1.0),
     ("other_actor_stop_in_front_intersection", 20)
@@ -41,6 +41,8 @@ def run_scenario_runner(scenario, f_index):
     
     if f_index == 0:
         command = f"python3.8 scenario_runner.py --scenario {scenario} {additional_arg} --output"
+        command = f"python3.8 scenario_runner.py --scenario {scenario} --output"
+        
     else:
         command = f"python3.8 scenario_runner.py --scenario {scenario + '_f' + str(f_index+1)} {additional_arg} --output"
     
@@ -114,8 +116,8 @@ def follow_directions(xml_file, scenarios, scenario_count, mode):
                 if mode == "d1":
                     # Completely randomize parameters
                     for param in parameters:
-                        min_value = 0.3 * param[1]
-                        max_value = 2 * param[1]
+                        min_value = 0.9 * param[1]
+                        max_value = 1.1 * param[1]
                         random_value = random.uniform(min_value, max_value)
                         if param[0].endswith("_ratio"):
                             random_value = min(random_value, 1)
@@ -162,49 +164,6 @@ def change_vehicle_type(xml_file, scenarios, scenario_count):
     tree.write(xml_file)
 
 
-def merge_classes(class_name_1, class_name_2, output_file):
-    # Read the Python file
-    with open(output_file, 'r') as file:
-        code = file.read()
-
-    # Parse the code into an abstract syntax tree (AST)
-    code_ast = ast.parse(code)
-
-    # Extract the class definitions
-    class_1_def = next((node for node in code_ast.body if isinstance(node, ast.ClassDef) and node.name == class_name_1), None)
-    class_2_def = next((node for node in code_ast.body if isinstance(node, ast.ClassDef) and node.name == class_name_2), None)
-
-    if class_1_def is None or class_2_def is None:
-        print(f"Could not find the classes {class_name_1} and/or {class_name_2} in the file {output_file}!")
-        return
-
-    # Create a new combined class definition
-    combined_class_def = ast.ClassDef(
-        name='FollowLeadingVehicleWithSideVehicleCombined',
-        bases=[],
-        body=[],
-        decorator_list=[],
-        keywords=[]
-    )
-
-    # Add methods and attributes from the first class
-    for node in class_1_def.body:
-        combined_class_def.body.append(deepcopy(node))
-
-    # Add methods and attributes from the second class, if they don't conflict with the first class
-    for node in class_2_def.body:
-        if not any(isinstance(n, type(node)) and n.name == node.name for n in class_1_def.body):
-            combined_class_def.body.append(deepcopy(node))
-
-    # Add the combined class to the existing code
-    code_ast.body.append(combined_class_def)
-
-    # Unparse the AST back into code
-    combined_code = astunparse.unparse(code_ast)
-
-    # Write the modified code back into the Python file
-    with open(output_file, 'w') as file:
-        file.write(combined_code)
 
 
 def copy_scenario(xml_file, scenario_name, class_name, new_class_name):
