@@ -220,10 +220,10 @@ class FollowLeadingVehicleWithObstacle(BasicScenario):
         Setup all relevant parameters and create scenario
         """
         self._map = CarlaDataProvider.get_map()
-        self._first_actor_location = 10
+        self._first_actor_location = 0
         self._second_actor_location = self._first_actor_location + 0 #+41
-        self._first_actor_speed = 10
-        self._second_actor_speed = 1.5
+        self._first_actor_speed = 0
+        self._second_actor_speed = 0
         self._reference_waypoint = self._map.get_waypoint(config.trigger_points[0].location)
         self._other_actor_max_brake = 1.0
         self._first_actor_transform = None
@@ -248,29 +248,95 @@ class FollowLeadingVehicleWithObstacle(BasicScenario):
 
         first_actor_waypoint, _ = get_waypoint_in_distance(self._reference_waypoint, self._first_actor_location)
         second_actor_waypoint, _ = get_waypoint_in_distance(self._reference_waypoint, self._second_actor_location)
+        
         first_actor_transform = carla.Transform(
             carla.Location(first_actor_waypoint.transform.location.x,
                            first_actor_waypoint.transform.location.y,
-                           first_actor_waypoint.transform.location.z - 500),
+                           first_actor_waypoint.transform.location.z + 2),
             first_actor_waypoint.transform.rotation)
-        self._first_actor_transform = carla.Transform(
-            carla.Location(first_actor_waypoint.transform.location.x,
-                           first_actor_waypoint.transform.location.y,
-                           first_actor_waypoint.transform.location.z + 1),
-            first_actor_waypoint.transform.rotation)
+        # self._first_actor_transform = carla.Transform(
+        #     carla.Location(first_actor_waypoint.transform.location.x,
+        #                    first_actor_waypoint.transform.location.y,
+        #                    first_actor_waypoint.transform.location.z + 1),
+        #     first_actor_waypoint.transform.rotation)
         yaw_1 = second_actor_waypoint.transform.rotation.yaw + 90
+        
         second_actor_transform = carla.Transform(
             carla.Location(second_actor_waypoint.transform.location.x,
                            second_actor_waypoint.transform.location.y,
-                           second_actor_waypoint.transform.location.z - 498.8), #-100 will trigger the potential bug
+                           second_actor_waypoint.transform.location.z + 1), #-100 will trigger the potential bug
             carla.Rotation(second_actor_waypoint.transform.rotation.pitch, yaw_1,
                            second_actor_waypoint.transform.rotation.roll))
-        self._second_actor_transform = carla.Transform(
-            carla.Location(second_actor_waypoint.transform.location.x,
-                           second_actor_waypoint.transform.location.y,
-                           second_actor_waypoint.transform.location.z + 1),
-            carla.Rotation(second_actor_waypoint.transform.rotation.pitch, yaw_1,
-                           second_actor_waypoint.transform.rotation.roll))
+        
+        for degree in range(0, 360, 1):
+            for x_degree in range(-2,2,1):
+                for y_degree in range(-1,1,1):
+                    for z_degree in range(-1,1,1):
+                    
+                        self._first_actor_transform = carla.Transform(
+                            carla.Location(first_actor_waypoint.transform.location.x + x_degree,
+                                        first_actor_waypoint.transform.location.y + y_degree,
+                                        first_actor_waypoint.transform.location.z + z_degree + 1),
+                            carla.Rotation(yaw=degree))
+                        
+                        
+                        
+                        first_actor = CarlaDataProvider.request_new_actor('vehicle.nissan.patrol', self._first_actor_transform)
+                        
+
+
+                        if first_actor is not None:
+                            print("Here is the error degree for first actor: ")
+                            
+                            print("degree: ",degree)
+                            print("x_degree: ",x_degree)
+                            print("y_degree: ",y_degree)
+                            print("z_degree: ",z_degree)
+                            
+                            print(first_actor)
+                            
+                            print('-'*30)
+                            first_actor.set_simulate_physics(enabled=True)
+                            self.other_actors.append(first_actor)
+                            
+                            for degree2 in range(0, 360, 1):
+                                for x_degree2 in range(-2,2,1):
+                                    for y_degree2 in range(-1,1,1):
+                                        for z_degree2 in range(-1,1,1):
+                                            self._second_actor_transform = carla.Transform(
+                                                carla.Location(second_actor_waypoint.transform.location.x+ x_degree2,
+                                                second_actor_waypoint.transform.location.y+ y_degree2,
+                                                second_actor_waypoint.transform.location.z + z_degree2 + 2),
+                                                carla.Rotation(yaw=degree))
+
+                                            second_actor = CarlaDataProvider.request_new_actor('vehicle.diamondback.century', self._second_actor_transform)
+
+                                            if second_actor is not None:
+                                                print("Here is the error degree for second actor: ")
+                                                
+                                                print("degree: ",degree2)
+                                                print("x_degree: ",x_degree2)
+                                                print("y_degree: ",y_degree2)
+                                                print("z_degree: ",z_degree2)
+                                                
+                                                print(second_actor)
+                        
+                                                second_actor.set_simulate_physics(enabled=True)
+                                                self.other_actors.append(second_actor)
+                                                return
+                        
+        # second_actor_transform = carla.Transform(
+        #     carla.Location(second_actor_waypoint.transform.location.x,
+        #                    second_actor_waypoint.transform.location.y,
+        #                    second_actor_waypoint.transform.location.z - 1), #-100 will trigger the potential bug
+        #     carla.Rotation(second_actor_waypoint.transform.rotation.pitch, yaw_1,
+        #                    second_actor_waypoint.transform.rotation.roll))
+        # self._second_actor_transform = carla.Transform(
+        #     carla.Location(second_actor_waypoint.transform.location.x,
+        #                    second_actor_waypoint.transform.location.y,
+        #                    second_actor_waypoint.transform.location.z + 1),
+        #     carla.Rotation(second_actor_waypoint.transform.rotation.pitch, yaw_1,
+        #                    second_actor_waypoint.transform.rotation.roll))
         
         
         print('-'*10)
@@ -279,15 +345,15 @@ class FollowLeadingVehicleWithObstacle(BasicScenario):
         print('-'*10)
         
 
-        first_actor = CarlaDataProvider.request_new_actor(
-            'vehicle.nissan.patrol', first_actor_transform)
-        second_actor = CarlaDataProvider.request_new_actor(
-            'vehicle.diamondback.century', second_actor_transform)
+        # first_actor = CarlaDataProvider.request_new_actor(
+        #     'vehicle.nissan.patrol', first_actor_transform)
+        # second_actor = CarlaDataProvider.request_new_actor(
+        #     'vehicle.diamondback.century', second_actor_transform)
 
-        first_actor.set_simulate_physics(enabled=False)
-        second_actor.set_simulate_physics(enabled=False)
-        self.other_actors.append(first_actor)
-        self.other_actors.append(second_actor)
+        # first_actor.set_simulate_physics(enabled=False)
+        # second_actor.set_simulate_physics(enabled=False)
+        # self.other_actors.append(first_actor)
+        # self.other_actors.append(second_actor)
 
     def _create_behavior(self):
         """

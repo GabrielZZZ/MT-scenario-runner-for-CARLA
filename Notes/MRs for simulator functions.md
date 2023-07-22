@@ -7,7 +7,7 @@ We can monitor the outputs by the collision results, and location data after spa
 
 **The code does not allow to spawn two actors at the same or very close location to avoid collision.**
 
-By running the iteration loop of trying to spawn the actor near the ego vehicle, the spawn function has no problem found.
+By running the iteration loop of trying to spawn the actor near the ego vehicle, I have identified a problem when try to spawn actors on the ego vehicle where should not be allowed to spawn.
 
 - **Scenario 1**: Two actors spawned at the same position should either collide immediately or occupy the same space.
   - The scenario cannot be loaded. 
