@@ -41,7 +41,7 @@ def run_scenario_runner(scenario, f_index):
     
     if f_index == 0:
         command = f"python3.8 scenario_runner.py --scenario {scenario} {additional_arg} --output"
-        command = f"python3.8 scenario_runner.py --scenario {scenario} --output"
+        # command = f"python3.8 scenario_runner.py --scenario {scenario} --output"
         
     else:
         command = f"python3.8 scenario_runner.py --scenario {scenario + '_f' + str(f_index+1)} {additional_arg} --output"
@@ -49,7 +49,7 @@ def run_scenario_runner(scenario, f_index):
     return subprocess.Popen(command, shell=True)
 
 def run_manual_control():
-    command = "python3.8 manual_control.py"
+    command = "python3.8 manual_control_new.py"
     return subprocess.Popen(command, shell=True)
 
 def create_scenario(root, old_scenario_name, scenario_name, config=None):

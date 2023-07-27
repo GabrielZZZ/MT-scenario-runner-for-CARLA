@@ -8,6 +8,9 @@ We can monitor the outputs by the collision results, and location data after spa
 **The code does not allow to spawn two actors at the same or very close location to avoid collision.**
 
 By running the iteration loop of trying to spawn the actor near the ego vehicle, I have identified a problem when try to spawn actors on the ego vehicle where should not be allowed to spawn.
+**Issue Ticket**: [
+Bug Report: The Spwan Function has permitted to spawn the actors at the location which will cause collisions
+](https://github.com/carla-simulator/carla/issues/6653)
 
 - **Scenario 1**: Two actors spawned at the same position should either collide immediately or occupy the same space.
   - The scenario cannot be loaded. 
@@ -26,6 +29,8 @@ By running the iteration loop of trying to spawn the actor near the ego vehicle,
 
 ## 2. Changing Environments
 
+- **Change Traffic Lights:** Change the traffic light from red to other colors regularly (Vehicles will only be aware of a traffic light if the light is red.)
+
 - **MR1**: Changing the environment (e.g., from dry to rainy) should cause the vehicle's behavior to change accordingly.
 - **MR2**: The vehicle's behavior should revert back to its original state when the environment is changed back to the original state.
 - **MR3**: If the environment changes from one state to another and back again, the behavior of the vehicle should revert back to the original state.
@@ -40,9 +45,36 @@ By running the iteration loop of trying to spawn the actor near the ego vehicle,
 
 ## 4. Vehicle Dynamics
 
+Control the movement of the vehicle by code.
+
+- **MR0**: When the ego starts, start throttle then changing the steering should be different to first change steering then starting throttle.
+
+
 - **MR1**: If the same force is applied twice to a vehicle from rest, the resulting speed should be approximately double compared to applying the force once.
 - **MR2**: If a force and then the opposite force are applied to a moving vehicle, the resulting speed should be close to the original speed before the forces were applied.
 - **MR3**: If the same force is applied to a moving vehicle twice in succession, the resulting speed decrease should be approximately double compared to applying the force once.
 - **MR4**: If a vehicle in motion has a force applied until it stops, applying the same force again should not change the vehicle's state.
 
-This document serves as a guide to creating MRs for testing a driving simulator, but it is by no means exhaustive. Additional MRs may be developed based on the specific behavior and characteristics of the simulator being tested.
+
+## 5. Simulator Performance
+- Are there anything to trigger the infinite loop of the simualtor that consume all the resources and make the software quit unexpectedly (maybe caused by the behavor of actors)
+
+1. **Large Scale Simulations**: Try creating a city-scale simulation with a large number of different actor types (e.g., cars, pedestrians, traffic lights). Then, make them interact in complex ways. CARLA should be able to handle it, but pushing it to the limit might reveal potential bugs. 
+
+2. **Physics Abnormalities**: Try making actors perform unlikely physical behaviors. For example, make a vehicle move at unrealistically high speeds or attempt to climb steep slopes. These sorts of stress tests can help identify potential problems with the physics engine.
+
+3. **Simultaneous and Rapid Sensor Input Changes**: Set up a situation where all sensors on a vehicle are triggered at once (collision sensor, lidar, cameras, etc.), or where the sensor inputs change rapidly. This might help to reveal issues with how CARLA handles simultaneous or rapidly changing sensor inputs.
+
+4. **Aggressive Driving Behaviors**: Design complex maneuvers like sudden lane changes, hard braking, sharp turns at high speed, or even driving off-road. Such behaviors can push the limits of the driving and physics models.
+
+5. **Light and Weather Conditions**: Test the limits of the rendering engine by creating extreme light or weather conditions. Try switching rapidly between day and night, or between calm weather and a storm. 
+
+6. **Traffic Rule Violations**: Make actors violate traffic rules consistently. This includes running red lights, ignoring stop signs, or going the wrong way down a one-way street. This can test both the traffic enforcement and the collision detection systems.
+
+7. **Continuous Change in Simulation Parameters**: Constantly change simulation parameters such as the time of day, weather conditions, the number and types of actors in the simulation, etc., while the simulation is running. This might reveal issues in how CARLA handles dynamic changes to the simulation environment.
+
+8. **Actor Collision Scenarios**: Try to create a scenario with an enormous amount of collisions between actors at once. This can stress test the collision detection and response system.
+
+9. **Scripted Complex Multi-Vehicle Maneuvers**: Try creating complex scenarios like a multi-vehicle chase, a traffic jam with many vehicles reacting to one stopped car, or a situation where multiple vehicles must yield to a pedestrian at a crosswalk.
+
+If you do discover bugs during this process, be sure to document them thoroughly. Include the specific circumstances that caused the bug, the expected behavior, the actual behavior, and any error messages you received. It's also helpful if you can provide a script or set of instructions to reproduce the bug. This information will greatly assist the CARLA team in diagnosing and fixing the problem.
