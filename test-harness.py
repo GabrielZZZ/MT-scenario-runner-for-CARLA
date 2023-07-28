@@ -49,7 +49,7 @@ def run_scenario_runner(scenario, f_index):
     return subprocess.Popen(command, shell=True)
 
 def run_manual_control():
-    command = "python3.8 manual_control_new.py"
+    command = "python3.8 manual_control_code.py"
     return subprocess.Popen(command, shell=True)
 
 def create_scenario(root, old_scenario_name, scenario_name, config=None):

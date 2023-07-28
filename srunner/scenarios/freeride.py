@@ -23,7 +23,7 @@ class FreeRide(BasicScenario):
     """
 
     def __init__(self, world, ego_vehicles, config, randomize=False, debug_mode=False, criteria_enable=True,
-                 timeout=10000000):
+                 timeout=10):
         """
         Setup all relevant parameters and create scenario
         """

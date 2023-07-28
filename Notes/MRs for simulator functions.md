@@ -47,7 +47,7 @@ Bug Report: The Spwan Function has permitted to spawn the actors at the location
 
 Control the movement of the vehicle by code.
 
-- **MR0**: When the ego starts, start throttle then changing the steering should be different to first change steering then starting throttle.
+- **MR0**: When the ego starts, start throttle then changing the steering will cause the GNSS data different to first change steering then starting throttle.
 
 
 - **MR1**: If the same force is applied twice to a vehicle from rest, the resulting speed should be approximately double compared to applying the force once.
