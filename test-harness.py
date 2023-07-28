@@ -7,6 +7,8 @@ import xml.etree.ElementTree as ET
 from copy import deepcopy
 import ast
 import astunparse
+from queue import Queue
+
 
 # List of available vehicle models
 vehicle_models = [
@@ -188,6 +190,26 @@ def copy_scenario(xml_file, scenario_name, class_name, new_class_name):
     # Write the modified XML back to the file
     tree.write(xml_file)
 
+
+def write_queue(filename):
+    # Define the command sequences
+    command_queue_straight = Queue()
+    command_queue_steer = Queue()
+
+    command_queue_straight.put(('w', 1.5))  # throttle for 1.5 seconds
+    command_queue_steer.put(('e', 1))  # turn left for 1 second
+    command_queue_steer.put(('a', 1))  # turn left for 1 second
+
+    # Convert the queues to lists
+    commands_straight = list(command_queue_straight.queue)
+    commands_steer = list(command_queue_steer.queue)
+
+    # Create a dictionary of commands
+    commands_dict = {'straight': commands_straight, 'steer': commands_steer}
+
+    # Write the dictionary to a file as a JSON object
+    with open(filename, 'w') as f:
+        json.dump(commands_dict, f)
 def main():
     parser = argparse.ArgumentParser(description='Test harness for scenario runner.')
     parser.add_argument('-r', action='store_true', help='Run the scenario execution process')
@@ -202,7 +224,8 @@ def main():
     parser.add_argument('-t', '--type', type=str, required=False, help='Type of scenarios to create')
     parser.add_argument('-f', type=int, default=1, help='Number of follow-up scenarios to run')
     parser.add_argument('-m', '--merge_classes', nargs=2, help='Merge two classes into a new combined class')
-
+    parser.add_argument('-q', type=str, help='Write a queue of commands to control ego vehicle to a file (json)')
+    
 
 
     args = parser.parse_args()
@@ -227,6 +250,9 @@ def main():
             manual_control_process.communicate()
 
             print(f"Iteration {f_index+1} finished.")
+
+    if args.q:
+        write_queue(args.q)
 
 if __name__ == '__main__':
     main()

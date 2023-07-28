@@ -60,6 +60,7 @@ import datetime
 import logging
 import math
 import weakref
+import json
 
 try:
     import pygame
@@ -103,12 +104,14 @@ except ImportError:
 from queue import Queue
 
 # Define the command queue, each element is a tuple (command, duration in seconds)
-command_queue_straight = Queue()
-command_queue_steer = Queue()
 
-command_queue_straight.put(('w', 1.5))  # throttle for 2 seconds
-command_queue_steer.put(('e', 1))  # turn left for 1 second
-command_queue_steer.put(('a', 1))  # turn left for 1 second
+
+# command_queue_straight = Queue()
+# command_queue_steer = Queue()
+
+# command_queue_straight.put(('w', 1.5))  # throttle for 2 seconds
+# command_queue_steer.put(('e', 1))  # turn left for 1 second
+# command_queue_steer.put(('a', 1))  # turn left for 1 second
 
 # command_queue_steer.put(('a', 2))  # throttle for 2 seconds
 # command_queue_straight.put(('w', 0.5))  # turn left for 1 second
@@ -117,6 +120,20 @@ command_queue_steer.put(('a', 1))  # turn left for 1 second
 # command_queue.put(('w', 1))  # throttle for 3 seconds
 # command_queue.put(('d', 0))  # turn right for 1 second
 # command_queue.put(('s', 2))  # brake for 1 second
+
+# Create queues for the commands
+command_queue_straight = Queue()
+command_queue_steer = Queue()
+
+# Read the commands from the file into a dictionary
+with open('commands.json', 'r') as f:
+    commands_dict = json.load(f)
+
+# Add the commands to the queues
+for command, duration in commands_dict['straight']:
+    command_queue_straight.put((command, duration))
+for command, duration in commands_dict['steer']:
+    command_queue_steer.put((command, duration))
 
 current_command_start_time_straight = None
 current_command_straight = None
