@@ -196,9 +196,31 @@ def write_queue(filename):
     command_queue_straight = Queue()
     command_queue_steer = Queue()
 
-    command_queue_straight.put(('w', 1.5))  # throttle for 1.5 seconds
-    command_queue_steer.put(('e', 1))  # turn left for 1 second
-    command_queue_steer.put(('a', 1))  # turn left for 1 second
+    # command_queue_straight.put(('w', 3))  # wait 
+    # command_queue_straight.put(('s', 2))  # throttle 
+    command_queue_straight.put(('w', 1))  # throttle 
+    command_queue_straight.put(('w', 1))  # throttle 
+    # command_queue_straight.put(('w', 1))  # throttle
+    # command_queue_straight.put(('w', 1))  # throttle 
+    # command_queue_straight.put(('s', 1))  # throttle  
+    command_queue_straight.put(('s', 1))  # throttle 
+    # command_queue_straight.put(('s', 1))  # throttle 
+    
+    # The deceleration for hitting throttle 3 seconds each and brake 2 seconds each is strange?
+    
+    '''
+    The following relationship should hold:
+    1. speed[[w,3]] >= speed[[w,1],[w,1],[w,1]] 
+    2. speed[[w,3],[s,1],[s,1]] >= speed[[w,3],[s,2]]
+    2.1. speed[[w,4],[s,1],[s,1]] >= speed[[w,4],[s,2]]
+    
+    3. speed[[w,3],[s,1],[s,1]] >= speed[[w,1],[w,1],[w,1],[s,1],[s,1]]
+    
+    
+    '''
+    
+    # command_queue_steer.put(('e', 1))  # wait 
+    # command_queue_steer.put(('a', 3))  # turn left 
 
     # Convert the queues to lists
     commands_straight = list(command_queue_straight.queue)

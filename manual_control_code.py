@@ -410,12 +410,19 @@ class KeyboardControl(object):
             # Execute the command
             if current_command_straight == 'w':
                 self._control.throttle = min(self._control.throttle + 0.1, 1.00)  # Throttle
-            elif current_command_straight == 's':
+            else:
+                self._control.throttle = 0.0
+            
+            if current_command_straight == 's':
                 self._control.brake = min(self._control.brake + 0.2, 1)  # Brake
-                
+            else:
+                self._control.brake = 0
+
             if time.time() - current_command_start_time_straight > current_duration_straight:
                 current_command_straight = None
                 self._control.throttle = 0.0
+                self._control.brake = 0
+                
 
         # If there is a current command, execute it
         if current_command_steer is not None:
@@ -506,6 +513,18 @@ class HUD(object):
         self._show_info = True
         self._info_text = []
         self._server_clock = pygame.time.Clock()
+        
+        self._document_text = []
+        
+        # Define the filename at the start of the script
+        start_time_str = time.strftime("%Y%m%d-%H%M%S")
+        self.filename = os.path.join("MT-results", f"info_text_{start_time_str}.json")
+
+        # Ensure the directory exists
+        os.makedirs(os.path.dirname(self.filename), exist_ok=True)
+
+        self.last_write_time = self.simulation_time  # Add this line to initialize last_write_time
+
 
     def on_world_tick(self, timestamp):
         self._server_clock.tick()
@@ -546,6 +565,15 @@ class HUD(object):
             'GNSS:% 24s' % ('(% 2.6f, % 3.6f)' % (world.gnss_sensor.lat, world.gnss_sensor.lon)),
             'Height:  % 18.0f m' % t.location.z,
             '']
+        
+        self._document_text = ['Simulation time: % 12s' % datetime.timedelta(seconds=int(self.simulation_time)),'Gyroscop: (%5.1f,%5.1f,%5.1f)' % (world.imu_sensor.gyroscope),
+            # 'Location:% 20s' % ('(% 5.1f, % 5.1f)' % (t.location.x, t.location.y)),
+            # 'GNSS:% 24s' % ('(% 2.6f, % 3.6f)' % (world.gnss_sensor.lat, world.gnss_sensor.lon)),
+            # 'Height:  % 18.0f m' % t.location.z,
+            'Speed:   % 15.0f km/h' % (3.6 * math.sqrt(v.x**2 + v.y**2 + v.z**2)),
+            'Accelero: (%5.1f,%5.1f,%5.1f)' % (world.imu_sensor.accelerometer),
+            'Brake:', c.brake]
+        
         self._info_text += [
             ('Throttle:', c.throttle, 0.0, 1.0),
             ('Steer:', c.steer, -1.0, 1.0),
@@ -569,6 +597,19 @@ class HUD(object):
                     break
                 vehicle_type = get_actor_display_name(vehicle, truncate=22)
                 self._info_text.append('% 4dm %s' % (d, vehicle_type))
+                
+        sim_time = self.simulation_time
+
+        # If a second or more has passed in simulation time
+        # print("sim_time: ", self.simulation_time)
+        # print("last_write_time: ", self.last_write_time)
+
+
+        if sim_time - self.last_write_time >= 1:
+            with open(self.filename, 'a') as f:
+                json.dump(self._document_text, f)
+                f.write('\n')
+            self.last_write_time = sim_time
 
     def toggle_info(self):
         self._show_info = not self._show_info
