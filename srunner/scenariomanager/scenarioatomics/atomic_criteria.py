@@ -110,6 +110,8 @@ class MaxVelocityTest(Criterion):
 
         self.actual_value = max(velocity, self.actual_value)
 
+        print("velocity: ", velocity)
+        
         if velocity > self.expected_value_success:
             self.test_status = "FAILURE"
         else:
@@ -1814,6 +1816,14 @@ class RunningRedLightTest(Criterion):
 
                         self.list_traffic_events.append(red_light_event)
                         self._last_red_light_id = traffic_light.id
+                        
+                        print("Agent ran a red light {} at (x={}, y={}, z={})".format(
+                                traffic_light.id,
+                                round(location.x, 3),
+                                round(location.y, 3),
+                                round(location.z, 3)))
+                        
+                        
                         break
 
         if self._terminate_on_failure and (self.test_status == "FAILURE"):

@@ -8,10 +8,14 @@
         <ego_vehicle x="-3" y="250" z="1" yaw="270" model="vehicle.lincoln.mkz_2017" />
         <other_actor x="8.5" y="188" z="0.3" yaw="180" model="vehicle.tesla.model3" />
     </scenario>
+
     <scenario name="OppositeVehicleRunningRedLight_3" type="OppositeVehicleRunningRedLight" town="Town03">
-        <ego_vehicle x="-2.8" y="-184" z="1" yaw="90" model="vehicle.lincoln.mkz_2017" />
+        <!-- <ego_vehicle x="-2.8" y="-184" z="1" yaw="90" model="vehicle.lincoln.mkz_2017" /> -->
+        <ego_vehicle x="-3.7" y="-155" z="1" yaw="90" model="vehicle.lincoln.mkz_2017" />
+
         <other_actor x="-22.5" y="-135" z="0.1" yaw="0" model="vehicle.tesla.model3" />
     </scenario>
+    
     <scenario name="OppositeVehicleRunningRedLight_4" type="OppositeVehicleRunningRedLight" town="Town03">
         <ego_vehicle x="69" y="128" z="1" yaw="180" model="vehicle.lincoln.mkz_2017" />
         <other_actor x="-6.8" y="112.5" z="0.1" yaw="90" model="vehicle.tesla.model3" />

@@ -22,7 +22,7 @@ from srunner.scenariomanager.scenarioatomics.atomic_behaviors import (ActorTrans
                                                                       ActorDestroy,
                                                                       WaypointFollower,
                                                                       SyncArrival)
-from srunner.scenariomanager.scenarioatomics.atomic_criteria import CollisionTest, DrivenDistanceTest, MaxVelocityTest
+from srunner.scenariomanager.scenarioatomics.atomic_criteria import CollisionTest, DrivenDistanceTest, MaxVelocityTest, RunningRedLightTest
 from srunner.scenariomanager.scenarioatomics.atomic_trigger_conditions import (InTriggerDistanceToLocation,
                                                                                InTriggerDistanceToNextIntersection,
                                                                                DriveDistance)
@@ -52,14 +52,14 @@ class OppositeVehicleRunningRedLight(BasicScenario):
     _ego_distance_to_drive = 40          # Allowed distance to drive
 
     # other vehicle
-    _other_actor_target_velocity = 10      # Target velocity of other vehicle
+    _other_actor_target_velocity = 0      # Target velocity of other vehicle
     _other_actor_max_brake = 1.0           # Maximum brake of other vehicle
     _other_actor_distance = 50             # Distance the other vehicle should drive
 
     _traffic_light = None
 
     def __init__(self, world, ego_vehicles, config, randomize=False, debug_mode=False, criteria_enable=True,
-                 timeout=180):
+                 timeout=20):
         """
         Setup all relevant parameters and create scenario
         and instantiate scenario manager
@@ -83,8 +83,11 @@ class OppositeVehicleRunningRedLight(BasicScenario):
             print("No traffic light for the given location of the ego vehicle found")
             sys.exit(-1)
 
-        self._traffic_light.set_state(carla.TrafficLightState.Green)
-        self._traffic_light.set_green_time(self.timeout)
+        self._traffic_light.set_state(carla.TrafficLightState.Red)
+ 
+        # self._traffic_light.set_green_time(self.timeout)
+        self._traffic_light.set_yellow_time(4.0)
+        
 
         # other vehicle's traffic light
         traffic_light_other = CarlaDataProvider.get_next_traffic_light(self.other_actors[0], False)
@@ -184,9 +187,9 @@ class OppositeVehicleRunningRedLight(BasicScenario):
         # Build behavior tree
         sequence = py_trees.composites.Sequence("Sequence Behavior")
         sequence.add_child(ActorTransformSetter(self.other_actors[0], self._other_actor_transform))
-        sequence.add_child(startcondition)
-        sequence.add_child(sync_arrival_parallel)
-        sequence.add_child(continue_driving)
+        # sequence.add_child(startcondition)
+        # sequence.add_child(sync_arrival_parallel)
+        # sequence.add_child(continue_driving)
         sequence.add_child(wait)
         sequence.add_child(ActorDestroy(self.other_actors[0]))
 
@@ -202,15 +205,19 @@ class OppositeVehicleRunningRedLight(BasicScenario):
         max_velocity_criterion = MaxVelocityTest(
             self.ego_vehicles[0],
             self._ego_max_velocity_allowed,
-            optional=True)
+            optional=False)
         collision_criterion = CollisionTest(self.ego_vehicles[0])
         driven_distance_criterion = DrivenDistanceTest(
             self.ego_vehicles[0],
             self._ego_expected_driven_distance)
 
-        criteria.append(max_velocity_criterion)
-        criteria.append(collision_criterion)
-        criteria.append(driven_distance_criterion)
+        traffic_light_criterion = RunningRedLightTest(self.ego_vehicles[0])
+
+        # criteria.append(max_velocity_criterion)
+        # criteria.append(collision_criterion)
+        # criteria.append(driven_distance_criterion)
+        criteria.append(traffic_light_criterion)
+        
 
         # Add the collision and lane checks for all vehicles as well
         for vehicle in self.other_actors:

@@ -51,7 +51,7 @@ def run_scenario_runner(scenario, f_index):
     return subprocess.Popen(command, shell=True)
 
 def run_manual_control():
-    command = "python3.8 manual_control_code.py"
+    command = "python3.8 manual_control.py"
     return subprocess.Popen(command, shell=True)
 
 def create_scenario(root, old_scenario_name, scenario_name, config=None):
@@ -196,14 +196,14 @@ def write_queue(filename):
     command_queue_straight = Queue()
     command_queue_steer = Queue()
 
-    # command_queue_straight.put(('w', 3))  # wait 
-    # command_queue_straight.put(('s', 2))  # throttle 
-    command_queue_straight.put(('w', 1))  # throttle 
-    command_queue_straight.put(('w', 1))  # throttle 
+    command_queue_straight.put(('w', 4))  # wait 
+    command_queue_straight.put(('s', 2))  # throttle 
+    # command_queue_straight.put(('w', 1))  # throttle 
+    # command_queue_straight.put(('w', 1))  # throttle 
     # command_queue_straight.put(('w', 1))  # throttle
     # command_queue_straight.put(('w', 1))  # throttle 
     # command_queue_straight.put(('s', 1))  # throttle  
-    command_queue_straight.put(('s', 1))  # throttle 
+    # command_queue_straight.put(('s', 1))  # throttle 
     # command_queue_straight.put(('s', 1))  # throttle 
     
     # The deceleration for hitting throttle 3 seconds each and brake 2 seconds each is strange?
