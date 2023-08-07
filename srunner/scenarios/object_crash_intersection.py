@@ -116,7 +116,7 @@ class VehicleTurningRight(BasicScenario):
     """
 
     def __init__(self, world, ego_vehicles, config, randomize=False, debug_mode=False, criteria_enable=True,
-                 timeout=60):
+                 timeout=40):
         """
         Setup all relevant parameters and create scenario
         """
@@ -181,13 +181,18 @@ class VehicleTurningRight(BasicScenario):
 
         # Set the transform to -500 z after we are able to spawn it
         actor_transform = carla.Transform(
-            carla.Location(self._other_actor_transform.location.x,
+            carla.Location(self._other_actor_transform.location.x-3,
                            self._other_actor_transform.location.y,
                            self._other_actor_transform.location.z - 500),
             self._other_actor_transform.rotation)
         first_vehicle.set_transform(actor_transform)
         first_vehicle.set_simulate_physics(enabled=False)
         self.other_actors.append(first_vehicle)
+        
+        # print actor_transform
+        print("Actor transform x: ", actor_transform.location.x)
+        print("Actor transform y: ", actor_transform.location.y)
+        print("Actor transform z: ", actor_transform.location.z)
 
     def _create_behavior(self):
         """
@@ -208,15 +213,17 @@ class VehicleTurningRight(BasicScenario):
         bycicle_start_dist = 13 + dist_to_travel
 
         if self._ego_route is not None:
+            print("Ego route is not none")
             trigger_distance = InTriggerDistanceToLocationAlongRoute(self.ego_vehicles[0],
                                                                      self._ego_route,
                                                                      self._other_actor_transform.location,
                                                                      bycicle_start_dist)
         else:
+            print("Ego route is none")
             trigger_distance = InTriggerDistanceToVehicle(self.other_actors[0],
                                                           self.ego_vehicles[0],
                                                           bycicle_start_dist)
-
+        print("Trigger distance is ", bycicle_start_dist)
         actor_velocity = KeepVelocity(self.other_actors[0], self._other_actor_target_velocity)
         actor_traverse = DriveDistance(self.other_actors[0], 0.30 * dist_to_travel)
         post_timer_velocity_actor = KeepVelocity(self.other_actors[0], self._other_actor_target_velocity)
@@ -260,8 +267,12 @@ class VehicleTurningRight(BasicScenario):
         """
         criteria = []
         collision_criterion = CollisionTest(self.ego_vehicles[0])
+        collision_criterion1 = CollisionTest(self.other_actors[0])
+        
 
         criteria.append(collision_criterion)
+        criteria.append(collision_criterion1)
+        
         return criteria
 
     def __del__(self):

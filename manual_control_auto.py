@@ -408,6 +408,9 @@ class HUD(object):
         self._show_info = True
         self._info_text = []
         self._server_clock = pygame.time.Clock()
+        
+        self._document_text = []
+        
 
         # Define the filename at the start of the script
         start_time_str = time.strftime("%Y%m%d-%H%M%S")
@@ -474,6 +477,19 @@ class HUD(object):
             collision,
             '',
             'Number of vehicles: % 8d' % len(vehicles)]
+        
+        self._document_text = ['Simulation time: % 12s' % datetime.timedelta(seconds=int(self.simulation_time)),'Gyroscop: (%5.1f,%5.1f,%5.1f)' % (world.imu_sensor.gyroscope),
+            'Location:% 20s' % ('(% 5.1f, % 5.1f)' % (t.location.x, t.location.y)),
+            'GNSS:% 24s' % ('(% 2.6f, % 3.6f)' % (world.gnss_sensor.lat, world.gnss_sensor.lon)),
+            'Speed:   % 15.0f km/h' % (3.6 * math.sqrt(v.x**2 + v.y**2 + v.z**2)),
+            'Accelero: (%5.1f,%5.1f,%5.1f)' % (world.imu_sensor.accelerometer),
+            'Brake:', c.brake,
+            'Throttle:', c.throttle,
+            'Steer:', c.steer,
+            # 'Collision:', collision,
+            ]
+        
+        
         if len(vehicles) > 1:
             self._info_text += ['Nearby vehicles:']
             distance = lambda l: math.sqrt((l.x - t.location.x)**2 + (l.y - t.location.y)**2 + (l.z - t.location.z)**2)
@@ -483,6 +499,8 @@ class HUD(object):
                     break
                 vehicle_type = get_actor_display_name(vehicle, truncate=22)
                 self._info_text.append('% 4dm %s' % (d, vehicle_type))
+                self._document_text.append('Vehicles: % 4dm' % (d))
+                
 
                 # print distance to terminal
                 # print('% 4dm %s' % (d, vehicle_type))
@@ -514,7 +532,7 @@ class HUD(object):
 
         if sim_time - self.last_write_time >= 1:
             with open(self.filename, 'a') as f:
-                json.dump(self._info_text, f)
+                json.dump(self._document_text, f)
                 f.write('\n')
             self.last_write_time = sim_time
 

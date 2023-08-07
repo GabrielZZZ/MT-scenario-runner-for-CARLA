@@ -609,6 +609,18 @@ class InTriggerDistanceToVehicle(AtomicCondition):
                                                                         global_planner=self._global_rp)
 
         if self._comparison_operator(distance, self._distance):
+            print("="*10)
+            print("Distance: ", distance)
+            print("self._distance: ", self._distance)
+            print("Actor Started!!")
+            # Get current date and time
+            now = datetime.datetime.now()
+
+            # Format date and time
+            formatted_now = now.strftime("%Y-%m-%d %H:%M:%S")
+            print("Time:", formatted_now)
+            print("="*10)
+            
             new_status = py_trees.common.Status.SUCCESS
 
         self.logger.debug("%s.update()[%s->%s]" % (self.__class__.__name__, self.status, new_status))

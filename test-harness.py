@@ -36,12 +36,12 @@ parameters = [
     # ... (add other parameters as needed)
 ]
 
-def run_scenario_runner(scenario, f_index):
+def run_scenario_runner(scenario, f_index, single):
     additional_arg = ""
     if f_index == 0:
         additional_arg = "--reloadWorld"  
     
-    if f_index == 0:
+    if single == True:
         command = f"python3.8 scenario_runner.py --scenario {scenario} {additional_arg} --output"
         # command = f"python3.8 scenario_runner.py --scenario {scenario} --output"
         
@@ -51,7 +51,7 @@ def run_scenario_runner(scenario, f_index):
     return subprocess.Popen(command, shell=True)
 
 def run_manual_control():
-    command = "python3.8 manual_control.py"
+    command = "python3.8 manual_control_auto.py"
     return subprocess.Popen(command, shell=True)
 
 def create_scenario(root, old_scenario_name, scenario_name, config=None):
@@ -247,6 +247,7 @@ def main():
     parser.add_argument('-f', type=int, default=1, help='Number of follow-up scenarios to run')
     parser.add_argument('-m', '--merge_classes', nargs=2, help='Merge two classes into a new combined class')
     parser.add_argument('-q', type=str, help='Write a queue of commands to control ego vehicle to a file (json)')
+    parser.add_argument('-i', action='store_true', help='Run the individual scenario multiple times')
     
 
 
@@ -265,7 +266,11 @@ def main():
     if args.r:
         for f_index in range(args.f):
             print(f"Running iteration {f_index+1}...")
-            scenario_runner_process = run_scenario_runner(args.scenario, f_index)
+            
+            if args.i:
+                scenario_runner_process = run_scenario_runner(args.scenario, f_index, True)
+            else:  
+                scenario_runner_process = run_scenario_runner(args.scenario, f_index, False)
             manual_control_process = run_manual_control()
 
             scenario_runner_process.communicate()

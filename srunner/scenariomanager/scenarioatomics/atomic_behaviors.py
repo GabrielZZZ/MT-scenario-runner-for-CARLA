@@ -16,6 +16,7 @@ The atomic behaviors are implemented with py_trees.
 from __future__ import print_function
 
 import copy
+import datetime
 import math
 import operator
 import os
@@ -1449,6 +1450,18 @@ class KeepVelocity(AtomicBehavior):
 
         if self._type == 'vehicle':
             if CarlaDataProvider.get_velocity(self._actor) < self._target_velocity:
+                if CarlaDataProvider.get_velocity(self._actor) == 0:
+                    print("="*10)
+                    
+                    print("Actor Start Acceleartion!!")
+                    # Get current date and time
+                    now = datetime.datetime.now()
+
+                    # Format date and time
+                    formatted_now = now.strftime("%Y-%m-%d %H:%M:%S")
+                    print("Time:", formatted_now)
+                    print("="*10)
+                
                 self._control.throttle = 1.0
             else:
                 self._control.throttle = 0.0
@@ -2205,11 +2218,32 @@ class HandBrakeVehicle(AtomicBehavior):
         if self._type == 'vehicle':
             self._control.hand_brake = self._hand_brake_value
             self._vehicle.apply_control(self._control)
+            
+            if self._hand_brake_value == False:
+                print("="*10)
+                print("Cyclist release handbrake!")
+                # Get current date and time
+                now = datetime.datetime.now()
+
+                # Format date and time
+                formatted_now = now.strftime("%Y-%m-%d %H:%M:%S")
+                print("Time:", formatted_now)
+                print("="*10)
         else:
             self._hand_brake_value = None
             self.logger.debug("%s.update()[%s->%s]" %
                               (self.__class__.__name__, self.status, new_status))
             self._vehicle.apply_control(self._control)
+            
+            # print("="*10)
+            # print("Cyclist release handbrake!")
+            # # Get current date and time
+            # now = datetime.datetime.now()
+
+            # # Format date and time
+            # formatted_now = now.strftime("%Y-%m-%d %H:%M:%S")
+            # print("Time:", formatted_now)
+            # print("="*10)
 
         return new_status
 

@@ -425,6 +425,14 @@ class CollisionTest(Criterion):
                 round(actor_location.x, 3),
                 round(actor_location.y, 3),
                 round(actor_location.z, 3)))
+        
+        print("Collision detected")
+        print("Agent collided against object with type={} and id={} at (x={}, y={}, z={})".format(
+                event.other_actor.type_id,
+                event.other_actor.id,
+                round(actor_location.x, 3),
+                round(actor_location.y, 3),
+                round(actor_location.z, 3)))
 
         self.test_status = "FAILURE"
         self.actual_value += 1
