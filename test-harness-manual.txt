@@ -1,0 +1,46 @@
+1. Start the CARLA Simulator:
+(base) gabriel@gabriel-MS-7C94:~/Desktop/carla-simulator$ ./CarlaUE4.sh
+
+2. Start the test harness:
+(base) gabriel@gabriel-MS-7C94:~/Desktop/carla-simulator/MT-scenario_runner-0.9.13$ python3.8 test-harness.py -r  -s FreeRide_1 -i 
+
+3. For the VD function testing:
+- RUN (base) gabriel@gabriel-MS-7C94:~/Desktop/carla-simulator/MT-scenario_runner-0.9.13$ python3.8 test-harness.py -q commands.json
+- this will generate a command file stored in commands.json to control the movement of the vehicle by code
+- NOTE: this will need to change command to manual_control_code.py in:
+    - command = "python3.8 manual_control_code.py" in "def run_manual_control():" function in the test_harness.py
+- The data is stored in 'carla-simulator/MT-scenario_runner-0.9.13/MT-results/info_text_20230805-104328.json'
+
+
+
+4. For the spawn function testing:
+- Generate Scenarios:
+    - Randomize scenarios (two modes: d1 / d2):
+        - python3.8 test-harness.py -d2 -g FollowLeadingVehicleScenarios_2 -n 10 -xml srunner/examples/FollowLeadingVehicleScenarios.xml
+- Run test case:
+    - python3.8 test-harness.py -r -i -s FollowLeadingVehicle_1
+- The spawn location of the actor have been tested iteratively (defined in MT-scenario_runner-0.9.13/srunner/scenarios/follow_leading_vehicle.py)
+    - The XML file (scenario customization) is in: MT-scenario_runner-0.9.13/srunner/examples/FollowLeadingVehicle.xml
+
+
+5. For the CheckMaximumVelocity criteria testing:
+- Enable the CheckMaximumVelocity criteria in the scenario definition: MT-scenario_runner-0.9.13/srunner/scenarios/opposite_vehicle_taking_priority.py
+- Enable the "manual_control_code" in test_harness.py
+- Change the commands.json for long time acceleration
+- Run Scenario:
+    - python3.8 test-harness.py -r  -s OppositeVehicleRunningRedLight_3
+
+
+
+6. For the AutoPilot mode testing:
+- NOTE: this will need to change command to manual_control_code.py in:
+    - command = "python3.8 manual_control_auto.py" in "def run_manual_control():" function in the test_harness.py
+- RUN Scenario:
+    - python3.8 test-harness.py -r  -s OppositeVehicleRunningRedLight_3
+- NOTE:
+    - Run red light case: Modify the ego init y coordinates in scenario OppositeVehicleRunningRedLight_3 to a value between -153 and -155
+
+
+
+7. For the actor latency testing:
+- RUN the same scenario multiple times: python3.8 test-harness.py -r -s VehicleTurningRight_5 -f 5 -i
